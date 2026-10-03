@@ -1,0 +1,16 @@
+model_a,model_b,MAE_a,MAE_b,MAE_a_minus_b,gap_ci_low,gap_ci_high,dm_stat,p_value,p_holm,significant_5pct
+Naive-1 (persistence),Naive-1 + hourly step,204.6846,74.31311,130.37149,110.06381,144.88875,30.72246,0.0,0.0,True
+Naive-1 (persistence),Lasso + hour×month,204.6846,64.913,139.7716,120.48236,153.84093,33.74251,0.0,0.0,True
+Naive-1 (persistence),Random Forest,204.6846,51.90822,152.77638,133.7656,167.21327,37.88227,0.0,0.0,True
+Naive-1 (persistence),XGBoost,204.6846,51.7343,152.9503,134.13007,166.91841,38.90724,0.0,0.0,True
+Naive-1 (persistence),"MLP v4 [64,32] Δ-target",204.6846,52.12335,152.56125,133.61632,166.37827,37.9587,0.0,0.0,True
+Naive-1 + hourly step,Lasso + hour×month,74.31311,64.913,9.40011,6.90938,12.25227,9.75149,0.0,0.0,True
+Naive-1 + hourly step,Random Forest,74.31311,51.90822,22.40489,19.75007,26.02538,18.30878,0.0,0.0,True
+Naive-1 + hourly step,XGBoost,74.31311,51.7343,22.57881,20.18838,26.22332,18.66139,0.0,0.0,True
+Naive-1 + hourly step,"MLP v4 [64,32] Δ-target",74.31311,52.12335,22.18976,19.43159,25.82536,18.46917,0.0,0.0,True
+Lasso + hour×month,Random Forest,64.913,51.90822,13.00478,11.13082,15.16269,14.01834,0.0,0.0,True
+Lasso + hour×month,XGBoost,64.913,51.7343,13.1787,11.47743,15.4924,14.69655,0.0,0.0,True
+Lasso + hour×month,"MLP v4 [64,32] Δ-target",64.913,52.12335,12.78965,10.93669,14.76964,15.85938,0.0,0.0,True
+Random Forest,XGBoost,51.90822,51.7343,0.17392,-0.69808,1.27281,0.51292,0.60803,1.0,False
+Random Forest,"MLP v4 [64,32] Δ-target",51.90822,52.12335,-0.21513,-1.69549,1.09268,-0.37577,0.7071,1.0,False
+XGBoost,"MLP v4 [64,32] Δ-target",51.7343,52.12335,-0.38905,-1.75462,0.5705,-0.75191,0.45214,1.0,False

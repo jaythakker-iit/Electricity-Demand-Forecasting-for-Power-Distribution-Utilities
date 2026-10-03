@@ -1,0 +1,11 @@
+,value
+raw_rows,23977
+hourly_grid_rows,24432
+missing_hours_raw,455
+gap_runs,241
+gap_runs_filled(<=3h),223
+hours_imputed,455
+rows_dropped_in_features,623
+model_ready_rows,23809
+n_features_tree,28
+n_features_linear,47

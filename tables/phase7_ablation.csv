@@ -1,0 +1,9 @@
+feature_set,split,n_features,MAE_ensemble,MAE_seed_mean,MAE_seed_std
+A_load_calendar,val,21,58.838,58.956,0.103
+A_load_calendar,test,21,51.497,51.609,0.059
+B_+weather,val,27,59.127,59.25,0.034
+B_+weather,test,27,51.761,51.882,0.149
+C_+festival,val,28,59.213,59.317,0.133
+C_+festival,test,28,51.502,51.622,0.096
+D_+weather_at_h (what-if),val,33,59.291,59.402,0.054
+D_+weather_at_h (what-if),test,33,51.845,51.968,0.174

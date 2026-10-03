@@ -1,0 +1,7 @@
+model,split,cv_mae,n_iter,target,min_samples_leaf,max_depth,max_features,subsample,reg_lambda,reg_alpha,n_estimators,min_child_weight,learning_rate,colsample_bytree
+Decision Tree,val,92.13519775077303,30,delta,10.0,20,,,,,,,,
+Decision Tree,test,87.90239755793229,30,delta,10.0,20,,,,,,,,
+Random Forest,val,75.34927200359516,8,delta,1.0,18,0.33,,,,,,,
+Random Forest,test,73.96225988069516,14,delta,1.0,18,0.33,,,,,,,
+XGBoost,val,77.95449719511039,20,delta,,10,,0.85,0.1,0.0,600.0,20.0,0.02,0.6
+XGBoost,test,77.17360459845995,40,delta,,10,,0.85,0.1,0.0,600.0,20.0,0.02,0.6

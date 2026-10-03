@@ -1,0 +1,7 @@
+model,MAE,ci_low,ci_high
+Naive-1 (persistence),204.685,185.251,218.365
+Naive-1 + hourly step,74.313,70.342,78.2
+Lasso + hour×month,64.913,61.044,68.632
+Random Forest,51.908,48.347,55.025
+XGBoost,51.734,48.099,54.442
+"MLP v4 [64,32] Δ-target",52.123,48.051,55.907
