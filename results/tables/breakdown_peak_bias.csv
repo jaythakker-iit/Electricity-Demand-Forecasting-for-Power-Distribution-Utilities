@@ -1,3 +1,0 @@
-,Naive-1 (persistence),Naive-1 + hourly step,Lasso + hour×month,Random Forest,XGBoost,"MLP v4 [64,32] Δ-target"
-Non-peak,-6.09,1.25,2.32,0.63,0.15,1.32
-Peak,46.69,8.61,24.64,4.43,8.02,4.82

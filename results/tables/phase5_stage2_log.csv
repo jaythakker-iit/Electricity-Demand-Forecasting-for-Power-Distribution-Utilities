@@ -1,5 +1,0 @@
-model,split,cv_mae_stage1,cv_mae_stage2,replaced,target,min_samples_leaf,max_features,max_depth,subsample,reg_lambda,reg_alpha,n_estimators,min_child_weight,learning_rate,colsample_bytree
-Random Forest,val,75.34927200359516,75.34927200359516,False,delta,1.0,0.33,18,,,,,,,
-Random Forest,test,73.96225988069516,73.96225988069516,False,delta,1.0,0.33,18,,,,,,,
-XGBoost,val,77.95449719511039,77.15976829929467,True,delta,,,14,0.85,0.1,0.0,1000.0,20.0,0.01,0.5
-XGBoost,test,77.17360459845995,76.06260127151704,True,delta,,,10,0.85,0.1,0.0,600.0,50.0,0.01,0.5

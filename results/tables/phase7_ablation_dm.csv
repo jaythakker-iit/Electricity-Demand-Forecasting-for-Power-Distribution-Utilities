@@ -1,4 +1,0 @@
-from,to,MAE_change,p_value
-A_load_calendar,B_+weather,0.26451,0.03009
-B_+weather,C_+festival,-0.25889,0.00035
-C_+festival,D_+weather_at_h (what-if),0.34242,0.00016
