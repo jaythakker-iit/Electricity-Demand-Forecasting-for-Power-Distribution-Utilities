@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+   # Project
+   data/processed/
+   results/models/*.pt
+   results/models/Random_Forest.joblib   # 212 MB; regenerate with scripts/run_phase5_trees.py
