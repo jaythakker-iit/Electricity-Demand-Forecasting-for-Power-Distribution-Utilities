@@ -22,6 +22,7 @@ py scripts/run_phase7_experiments.py  # walk-forward and ablation (~6 min)
 py scripts/run_phase7_figures.py  # F28–F34 and F36 (+ notebooks/06_evaluation.ipynb)
 py -m pytest -q                   # integrity + leakage tests
 ```
+## Note : Separate Notebook file is also provided for each analysis phase (e.g., `Electricity_Demand_Forecasting_Complete_Colab.ipynb`), containing the code along with the executed results and outputs.
 
 ## Layout
 
