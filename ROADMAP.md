@@ -77,7 +77,7 @@ Every model in Phases 4–6 is judged by its **skill against the strongest basel
 | Conclusion claimed "Pipeline prevents leakage" for all models | Phase 8 wording |
 | Figures report had no methodology/discussion; Figures 9 and 14 were missing | Phase 8 |
 
-## Team mapping (suggested)
+## Team mapping
 
 - **Member 1:** Phases 1–3 (data, EDA, baselines)
 - **Member 2:** Phases 4–5 (linear and tree models)
