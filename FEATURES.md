@@ -8,7 +8,7 @@ The feature definitions live in `src/features.py`. All features are named relati
 
 ## 1. In use
 
-| Group | Features | Tree models (28) | Linear / MLP (47) |
+| Group | Features | Tree models (28) | Linear models (47) |
 |---|---|---|---|
 | Load history | `load_lag_1, _2, _3, _24, _48, _168`, `load_roll_mean_24`, `load_roll_std_24`, `load_roll_mean_168` | ✔ | ✔ |
 | Load momentum | `load_ramp_1` (= lag1 − lag2) | ✔ | — (see 2a) |
@@ -24,7 +24,7 @@ The feature definitions live in `src/features.py`. All features are named relati
 
 ## 2. Left out, and how to bring each back
 
-### 2a. Removed from the linear/MLP set because they are exact duplicates (no information lost)
+### 2a. Removed from the linear set because they are exact duplicates (no information lost)
 
 These are exact linear combinations of other columns in the linear set. Keeping them makes the design matrix rank-deficient (cond ≈ 10¹⁶), so OLS has no unique solution. The information is **still present** through the equivalent columns. *Found in Phase 2b (VIF check).*
 
@@ -51,7 +51,7 @@ These are exact linear combinations of other columns in the linear set. Keeping 
 | `holiday_type = "Weekend"` | Not used | Same information as `is_weekend` / `dow` | — |
 | Weather label "Clear" | Reference level (dropped dummy) | Avoids the dummy-variable trap | — |
 | Days before/after a festival | Not built | Possible pre/post-festival effect | `days_to_festival`, `is_festival_eve`. Must use the known calendar only. |
-| Hour × month interaction | **Built in Phase 4** (`features.linear_design(df, interactions=True)`: +11 month one-hots, +253 hour×month dummies, 309 columns) | The daily shape flips with season (EDA Fig 3) | Already in use for the best linear model (64.9 MW vs 92.4 without). Trees and the MLP learn interactions on their own. |
+| Hour × month interaction | **Built in Phase 4** (`features.linear_design(df, interactions=True)`: +11 month one-hots, +253 hour×month dummies, 309 columns) | The daily shape flips with season (EDA Fig 3) | Already in use for the best linear model (64.9 MW vs 92.4 without). Trees learn interactions through successive splits. |
 | Cooling degree-hours, temp² | Not built | EDA showed temperature has no effect beyond the calendar (r ≈ 0.000) | Only worth trying if better weather data becomes available. |
 | Short rolling windows (3 h, 6 h), rolling max/min | Not built | Lags 1–3 already cover the last few hours | Add to `features.py`, then re-run the full-rank test and the Phase 7 ablation. |
 
@@ -69,9 +69,9 @@ These are exact linear combinations of other columns in the linear set. Keeping 
 
 | Change | Val MAE | Test MAE | Test DM p | Recommendation |
 |---|---|---|---|---|
-| + weather at h−1 (`temp_lag_1`, `humidity_lag_1`, `temp_roll_mean_24`, `weather_lag_1_*`) | +0.29 | +0.26 | 0.03 | **Candidate for removal**: hurts on both splits |
-| + `is_festival` | +0.09 | −0.26 | < 0.001 | Keep for now; benefit uncertain (Val has few festivals) |
-| + weather at h (`fx_*`, what-if) | +0.08 | +0.34 | < 0.001 | Don't add: even perfect weather doesn't help |
+| + weather at h−1 (`temp_lag_1`, `humidity_lag_1`, `temp_roll_mean_24`, `weather_lag_1_*`) | +0.29 | +0.26 | — | **Candidate for removal**: hurts on both splits |
+| + `is_festival` | +0.09 | −0.26 | — | Keep for now; benefit uncertain (Val has few festivals) |
+| + weather at h (`fx_*`, what-if) | +0.08 | +0.34 | — | Don't add: even perfect weather doesn't help |
 
 Load + calendar alone (21 features) matches the full 28-feature model on test (51.5 MW). **Not applied to the final models**, because that would be a test-informed change. To act on it, re-run the Phase 5–6 tuning with weather removed and decide on **CV / Val**, then report the test score once.
 

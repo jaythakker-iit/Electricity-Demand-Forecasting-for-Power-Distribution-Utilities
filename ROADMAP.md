@@ -1,8 +1,8 @@
 # Project Roadmap — Electricity Demand Forecasting (EM 630, IIT Gandhinagar)
 
-**Goal:** Forecast hourly electricity demand (MW) **one hour ahead** from past load, calendar, weather and festival data. Compare regularised linear models, tree ensembles and a neural network against naive baselines. Ship the work as a reproducible repo, a report, a slide deck and a demo app.
+**Goal:** Forecast hourly electricity demand (MW) **one hour ahead** from past load, calendar, weather and festival data. Compare regularised linear models and tree ensembles against naive baselines. Ship the work as a reproducible repo, a report, a slide deck and a demo app.
 
-**Scope (agreed):** a hybrid. We keep the existing Indian load dataset and the XGBoost work, and add Ridge/Lasso and a PyTorch MLP so the project covers the course syllabus: regularisation, convex optimisation, gradient descent and hyperparameter tuning.
+**Scope (agreed):** We keep the existing Indian load dataset and XGBoost work, and add Ridge/Lasso to cover the taught material on regularisation, convex optimisation and hyperparameter tuning.
 
 **How we work:** one phase at a time. Each phase ends with an **Evaluator Gate**, a checklist that has to pass before the next phase starts. The gate result is recorded in `results/evaluator_log.md`.
 
@@ -21,10 +21,9 @@ data/processed/features.parquet  ──► tests/ (leakage + integrity checks)
    │  Phase 3  baselines      naive-1, naive-24, naive-168
    │  Phase 4  linear         OLS, RidgeCV, LassoCV (TimeSeriesSplit)
    │  Phase 5  trees          DT, RF, XGBoost (randomised search + early stopping)
-   │  Phase 6  neural         EnergyMLP v1/v2/v3 (PyTorch, early stopping on Val)
    ▼
 results/tables/*.csv, results/figures/*.png, results/models/*
-   │  Phase 7  compare_all + error analysis + significance test
+   │  Phase 7  compare_all + error analysis + moving-block-bootstrap intervals
    ▼
 Phase 8 report (.docx) · Phase 9 deck · Phase 10 Streamlit app · Phase 11 final QA
 ```
@@ -49,8 +48,7 @@ Phase 8 report (.docx) · Phase 9 deck · Phase 10 Streamlit app · Phase 11 fin
 | 3 | Baselines ✅ | A model is only "good" relative to a trivial forecast. This phase also fixes the off-by-one bug in the old seasonal naive | `baselines.csv` | naive-24 uses the load at *h−24* (old code used *h−25*) |
 | 4 | Linear models ✅ | Course core: L2 vs L1 regularisation, bias–variance, sparsity | OLS/Ridge/Lasso metrics, α-CV curve, Lasso path, coefficients | α chosen by time-series CV; scaler inside the pipeline; nonzero Lasso coefficients reported |
 | 5 | Tree models ✅ | Non-linear interactions (hour × temperature × weekday) | DT/RF/XGB metrics, best params, importances | Tuning uses train only; search space wider than in v1; early stopping on Val |
-| 6 | MLP ✅ | Course core: gradient descent, Adam, regularisation through dropout and weight decay, learning-rate scheduling | 3 experiments, loss curves, `mlp_*.pt` | Val loss curve plateaus; best epoch restored; results stable across seeds |
-| 7 | Evaluation ✅ | Shows *where* and *when* the models fail, beyond one overall number | `compare_all.csv`, error by hour/weekday/level/peak, walk-forward, feature-group ablation, SHAP, Diebold–Mariano test | Same test set for every model; peak threshold taken from train; claims backed by tables |
+| 6 | Evaluation ✅ | Shows *where* and *when* the models fail, beyond one overall number | `compare_all.csv`, error by hour/weekday/level/peak, walk-forward, feature-group ablation and moving-block-bootstrap intervals | Same test set for every model; peak threshold taken from train; claims backed by tables |
 | 8 | Report | The graded deliverable | `reports/Final_Report.docx` | Every number traceable to a CSV; sections: Abstract → Conclusion → References |
 | 9 | Deck | Viva / presentation | Slide deck | Content matches the report; ~12–15 slides |
 | 10 | Demo app | Shows a working product | `app/streamlit_app.py` | Runs locally; uses the saved models; no retraining in the app |
@@ -62,13 +60,9 @@ Phase 8 report (.docx) · Phase 9 deck · Phase 10 Streamlit app · Phase 11 fin
 
 Every model in Phases 4–6 is judged by its **skill against the strongest baseline**, "Naive-1 + hourly step": **test MAE 74.3 MW, MAPE 1.77%**. Beating plain persistence (204.7 MW) is not enough. For reference, v1's tuned XGBoost (74.4 MW) did not clear this bar.
 
-**Updated after Phase 4:** the best linear model, Lasso + hour×month, reaches **64.9 MW**. XGBoost (Phase 5) and the MLP (Phase 6) must beat **64.9 MW** to justify their extra complexity.
+**Updated after Phase 4:** the best linear model, Lasso + hour×month, reaches **64.9 MW**. The tree models in Phase 5 must beat **64.9 MW** to justify their extra complexity.
 
-**Updated after Phase 5:** XGBoost **51.7 MW** and Random Forest **51.9 MW** (both predicting the hourly change). The MLP (Phase 6) is judged against **≈ 51.7 MW**.
-
-**Updated after Phase 6:** MLP v4 (Δ-target, 3-seed ensemble) reaches **52.1 MW**. Three model families converge on ≈ 52 MW; Phase 7 tests whether the differences are significant.
-
-**Final verdict (Phase 7):** Random Forest 51.9, XGBoost 51.7, MLP v4 52.1 MW form a **statistical three-way tie** (Diebold–Mariano, Holm p = 1.0). All are significantly better than Lasso + hour×month (64.9), the step baseline (74.3) and persistence (204.7). XGBoost is used as the demo-app model (smallest file, fastest, tied best).
+**Final verdict:** XGBoost (51.7 MW) and Random Forest (51.9 MW) have the lowest observed test MAE. Their moving-block-bootstrap intervals should be reported alongside the point estimates; no formal hypothesis test is included. XGBoost is used as the demo-app model (smallest file and fastest).
 
 ## Known issues carried over from v1 (and where they get fixed)
 
@@ -87,5 +81,5 @@ Every model in Phases 4–6 is judged by its **skill against the strongest basel
 
 - **Member 1:** Phases 1–3 (data, EDA, baselines)
 - **Member 2:** Phases 4–5 (linear and tree models)
-- **Member 3:** Phase 6 (MLP) and the app
+- **Member 3:** App and final QA
 - **All:** Phase 7 analysis, report, deck
