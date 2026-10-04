@@ -25,6 +25,7 @@ py -m pytest -q                   # integrity + leakage tests
 ## Note : Separate Notebook file is also provided for each analysis phase (e.g.,`Electricity_Demand_Forecasting_Complete_Colab.ipynb`), containing the code along with the executed results and outputs.
 > [Electricity_Demand_Forecasting_Complete_Colab.ipynb]([Electricity_Demand_Forecasting_Complete_Colab.ipynb] )
 
+
 ## Layout
 
 ```
